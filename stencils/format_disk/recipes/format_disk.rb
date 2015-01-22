@@ -9,5 +9,5 @@ filesystem '|{.Options.Label}|' do
   fstype '|{.Options.Fstype}|'
   device '|{.Options.Device}|'
   mount '|{.Options.Mountpoint}|'
-  action '|{.Options.Action}|'
+  action |{.Options.Action}|
 end

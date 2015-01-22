@@ -9,7 +9,6 @@
   "base": {
     "files": [
       ".gitignore",
-      ".kitchen.yml",
       "Berksfile",
       "CHANGELOG.md",
       "Gemfile",

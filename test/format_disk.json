@@ -1,0 +1,10 @@
+{
+  "name": "format_disk_cookbook",
+  "stencils": [
+    {
+      "name": "format_disk_recipe",
+      "stencil_set": "format_disk",
+      "stencil": "format_disk"
+    }
+  ]
+}
