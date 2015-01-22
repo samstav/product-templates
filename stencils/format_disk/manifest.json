@@ -1,0 +1,34 @@
+{
+  "id": "format_disk",
+  "api": 1,
+  "default_stencil": "format_disk",
+  "dependencies": [
+    "filesystem"
+  ],
+  "options": {
+    "name": {
+      "help": "The label for your filesystem.",
+      "default": "data"
+    },
+    "fstype": {
+      "help": "The filesystem type",
+      "default": "ext4"
+    },
+    "device": {
+      "help": "The device you are mounting",
+      "default": "/dev/xvde1"
+    },
+    "action": {
+	"help": "create, enable, or mount",
+	"default": "[:create, :enable, :mount]"
+    }
+  },
+  "stencils": {
+    "format_disk": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/format_disk.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/format_disk_spec.rb"
+      }
+    }
+  }
+}
