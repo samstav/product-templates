@@ -8,6 +8,6 @@
 filesystem '|{.Options.Label}|' do
   fstype '|{.Options.Fstype}|'
   device '|{.Options.Device}|'
-  mount '|{.Options.Mount}|'
+  mount '|{.Options.Mountpoint}|'
   action '|{.Options.Action}|'
 end

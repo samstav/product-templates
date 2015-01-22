@@ -7,7 +7,11 @@
   ],
   "options": {
     "name": {
-      "help": "The label for your filesystem.",
+      "help": "The name of the recipe to create",
+      "default": "format_disk"
+    },
+   "label": {
+      "help": "The label of the filesystem",
       "default": "data"
     },
     "fstype": {
@@ -18,7 +22,11 @@
       "help": "The device you are mounting",
       "default": "/dev/xvde1"
     },
-    "action": {
+    "mountpoint": {
+      "help": "Where to mount your device",
+      "default": "/mnt/data"
+    },
+      "action": {
 	"help": "create, enable, or mount",
 	"default": "[:create, :enable, :mount]"
     }
