@@ -1,0 +1,5 @@
+source 'https://api.berkshelf.com'
+
+metadata
+
+cookbook 'filesystem', git: 'git@github.com:helle/filesystem_cookbook.git'

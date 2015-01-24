@@ -9,7 +9,6 @@
   "base": {
     "files": [
       ".gitignore",
-      "Berksfile",
       "CHANGELOG.md",
       "Gemfile",
       "metadata.rb",

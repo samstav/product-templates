@@ -36,7 +36,8 @@
       "files": {
         "recipes/<NAME>.rb": "recipes/format_disk.rb",
         "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/format_disk_spec.rb",
-        ".kitchen.yml": ".kitchen.yml"	  
+        ".kitchen.yml": ".kitchen.yml",
+        "Berksfile": "Berksfile"
       }
     }
   }
