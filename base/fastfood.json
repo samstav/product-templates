@@ -1,4 +1,4 @@
 {
-  "name": "|{.Name}|",
+  "name": "|{ cookbook['name'] }|",
   "providers": []
 }

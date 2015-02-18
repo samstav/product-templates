@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: |{ .Cookbook.Name }|
-# Recipe :: |{ .Options.Name }|
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{ .Cookbook.Year }|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
 deploy_dir = '/usr/local/rspace_devops'

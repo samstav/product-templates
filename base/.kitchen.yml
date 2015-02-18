@@ -16,4 +16,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[|{ .Name }|::default]
+      - recipe[|{ cookbook['name'] }|::default]

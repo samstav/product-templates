@@ -1,27 +1,27 @@
 #
-# Cookbook Name:: |{ .Cookbook.Name }|
-# Recipe :: |{ .Options.Name }|
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{ .Cookbook.Year }|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
 include_recipe 'mysql-multi::mysql-master'
 include_recipe 'database::mysql'
 
-|{ if ne .Options.Database ""}|
+{% if options['database'] != "" %}
 conn = {
   host: 'localhost',
   username: 'root',
   password: node['mysql']['server_root_password']
 }
 
-|{ if ne .Options.Databag "" }|
+{% if options['databag'] != "" %}
 mysql_creds = Chef::EncryptedDataBagItem.load(
-  '|{ .Options.Databag }|',
+  '|{ options['databag'] }|',
   node.chef_environment
 )
 
-mysql_database |{ .QString .Options.Database }| do
+mysql_database |{ qstring(options['database']) }| do
   connection conn
   action :create
 end
@@ -29,42 +29,42 @@ end
 mysql_database_user mysql_creds['username'] do
   connection conn
   password mysql_creds['password']
-  database_name |{ .QString .Options.Database }|
+  database_name |{ qstring(options['database']) }|
   action :create
 end
-|{ else }|
-mysql_database |{ .QString .Options.Database }| do
+{% else %}
+mysql_database |{ qstring(options['database']) }| do
   connection conn
   action :create
 end
 
-mysql_database_user |{ .Options.User }| do
+mysql_database_user |{ options['user'] }| do
   connection conn
-  password |{ .Options.Password }|
-  database_name |{ .QString .Options.Database }|
+  password |{ options['password'] }|
+  database_name |{ qstring(options['database']) }|
   action :create
 end
-|{ end }|
-|{ end }|
+{% endif %}
+{% endif %}
 
-|{ if ne .Options.Openfor "" }|
-|{ if eq .Options.Openfor "environment" }|
+{% if .options['openfor'] != "" %}
+{% if options['openfor'] == "environment" }|
 search_add_iptables_rules("chef_environment:#{node.chef_environment}",
                           'INPUT',
                           "-m #{proto} -p #{proto} --dport #{node['mysql']['port']} -j ACCEPT",
                           9999,
                           'Open port for Mysql')
-|{ else if eq .Options.Openfor "all" }|
+{% elif options['openfor'] == "all" %}
 search_add_iptables_rules("nodes:*",
                           'INPUT',
                           "-m #{proto} -p #{proto} --dport #{node['mysql']['port']} -j ACCEPT",
                           9999,
                           'Open port for Mysql')
-|{ else }|
-search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{.Options.Openfor}|",
+{% else %}
+search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{ options['openfor'] }|",
                           'INPUT',
                           "-m #{proto} -p #{proto} --dport #{node['mysql']['port']} -j ACCEPT",
                           9999,
                           'Open port for Mysql')
-|{ end }|
-|{ end }|
+{% endif %}
+{% endif %}

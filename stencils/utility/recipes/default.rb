@@ -1,11 +1,11 @@
 #
-# Cookbook Name:: |{.Cookbook.Name}|
-# Recipe :: |{ .Options.Name }|
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{ .Cookbook.Year }|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
-node.default['authorization']['sudo']['passwordless'] = |{ .Options.Sudo }|
+node.default['authorization']['sudo']['passwordless'] = |{ options['sudo'] }|
 node.default['platformstack']['omnibus_updater']['enabled'] = false
 
 include_recipe 'rackops_rolebook::default'

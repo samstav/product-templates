@@ -1,19 +1,19 @@
 #
-# Cookbook Name:: |{.Cookbook.Name}|
-# Recipe :: |{.Options.Name}|
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{ .Cookbook.Year }|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
 include_recipe 'chef-sugar'
 
-tag '|{.Options.Clustertag}|'
+tag '|{ options['clustertag'] }|'
 
 node.default['rabbitmq']['use_distro_version'] = true
 node.default['rabbitmq']['port'] = '5672' if node['rabbitmq']['port'].nil?
 
-|{ if eq .Options.Cluster "true" }|
-rabbit_nodes = search(:node, "chef_environment:#{node.chef_environment} AND tags:|{.Options.Clustertag}| AND NOT name:#{node.name}")
+{% if options['cluster'] == "true" %}
+rabbit_nodes = search(:node, "chef_environment:#{node.chef_environment} AND tags:|{ options['clustertag'] }| AND NOT name:#{node.name}")
 
 cluster_nodes = []
 rabbit_nodes.each do |rabbit_node|
@@ -24,10 +24,14 @@ end
 
 node.default['rabbitmq']['cluster'] = true
 node.default['rabbitmq']['cluster_disk_nodes'] = cluster_nodes
-|{ end }|
+{i% end %}
 
 include_recipe 'rabbitmq'
 
-|{ if ne .Options.Openfor "" }|
-search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{.Options.Openfor}|", 'INPUT', "-p tcp --dport #{node['rabbitmq']['port']} -j ACCEPT", 70, 'access to rabbitmq')
-|{ end }|
+{% if options['openfor'] != "" %}
+search_add_iptables_rules("chef_environment:#{node.chef_environment} AND tags:|{ options['openfor'] }|",
+                          'INPUT',
+                          "-p tcp --dport #{node['rabbitmq']['port']} -j ACCEPT",
+                          70,
+                          ['access to rabbitmq')
+{% end %}

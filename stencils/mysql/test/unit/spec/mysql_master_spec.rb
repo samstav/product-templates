@@ -1,8 +1,8 @@
 require_relative 'spec_helper'
 
-describe '|{ .Cookbook.Name }|::|{ .Options.Name }|' do
+describe '|{ cookbook['name'] }|::|{ options['name'] }|' do
   let(:chef_run) do
-    ChefSpec::Runner.new.converge('|{ .Cookbook.Name }|::|{ .Options.Name }|')
+    ChefSpec::Runner.new.converge('|{ cookbook['name'] }|::|{ options['name'] }|')
   end
 
   it 'includes the mysql-multi::mysql_master recipe' do
@@ -12,9 +12,9 @@ describe '|{ .Cookbook.Name }|::|{ .Options.Name }|' do
   it 'includes the database::mysql recipe' do
     expect(chef_run).to include_recipe('database::mysql')
   end
-  |{ if ne .Options.Database ""}|
-  it 'creates the mysql_database |{ .Options.Database }|' do
-    expect(chef_run).to create_mysql_database(|{ .Options.Database }|)
+  {% if options['database'] != "" %}
+  it 'creates the mysql_database |{ options['database'] }|' do
+    expect(chef_run).to create_mysql_database(|{ options['database'] }|)
   end
-  |{ end }|
+  {% endif %}
 end

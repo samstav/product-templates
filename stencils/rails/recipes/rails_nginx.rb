@@ -1,45 +1,45 @@
 #
-# Cookbook Name:: |{.Cookbook.Name}|
-# Recipe :: |{.Options.Name}|
+# Cookbook Name:: |{ cookbook['name']} |
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{.Cookbook.Year}|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
 include_recipe 'nginx'
 include_recipe 'chef-sugar'
-include_recipe '|{.Cookbook.Name}|::_ruby_common'
+include_recipe '|{ cookbook['name'] }|::_ruby_common'
 
-|{ if ne .Options.Dbcredentials "" }|
-db_credentials = Chef::EncryptedDataBagItem.load(|{.QString .Options.Dbcredentials}|, node.chef_environment)
-db_master = search(:node, "chef_environment:#{node.chef_environment} AND tags:|{.Options.Dbtype}|_master").first
-|{ end }|
+{% if options['dbcredentials'] != "" %}
+db_credentials = Chef::EncryptedDataBagItem.load(|{ qstring(options['dbcredentials']) }|, node.chef_environment)
+db_master = search(:node, "chef_environment:#{node.chef_environment} AND tags:|{ options['dbtype'] }|_master").first
+{% endif %}
 
-app_name = |{.QString .Options.Name}|
-app_path = File.join(|{.QString .Options.Root}|, |{.QString .Options.Name}|)
+app_name = |{ qstring(options['name']) }|
+app_path = File.join(|{ qstring(options['root']) }|, |{ qstring(options['name']) }|)
 
 bundle_cmd = File.Join(node['rbenv']['root_path'], 'shims/bundle')
 application app_name do
   path app_path
-  owner |{.QString .Options.Owner}|
-  group |{.QString .Options.Group}|
-  repository |{.QString .Options.Repo}|
-  revision |{.QString .Options.Revision}|
-  migrate |{.Options.Migrate}|
+  owner |{ qstring(options['owner']) }|
+  group |{ qstring(options['group']) }|
+  repository |{ qstring(options['repo']) }|
+  revision |{ qstring(options['revision']) }|
+  migrate |{ options['migrate'] }|
   environment_name node.chef_environment
 
   rails do
     bundler true
     bundle_command bundle_cmd
     precompile_assets true
-    |{ if ne .Options.Dbcredentials "" }|
+    {% if options['dbcredentials'] != "" %}
     database do
-      adapter |{.QString .Options.Dbadapter}|
+      adapter |{ qstring(options['dbadapter']) }|
       host best_ip_for(db_master)
       database db_credentials['database']
       username db_credentials['username']
       password db_credentials['password']
     end
-    |{ end }|
+    {% endif %}
   end
 
   create_dirs_before_symlink %w(tmp tmp/cache)
@@ -54,7 +54,7 @@ end
 unicorn_socket = "unix:/tmp/unicorn-#{app_name}.sock"
 unicorn_ng_config File.join(app_path, 'current/config/unicorn.rb') do
   worker_processes 4
-  user |{.QString .Options.Owner}|
+  user |{ qstring(options['owner']) }|
   working_directory File.join(app_path, 'current')
   listen unicorn_socket
   pid "/tmp/unicorn-#{app_name}.pid"
@@ -68,7 +68,7 @@ unicorn_ng_service File.join(app_path, 'current') do
   service_name "unicorn-#{app_name}"
   config File.join(app_path, 'current/config/unicorn.rb')
   environment node.chef_environment
-  user |{.QString .Options.Owner}|
+  user |{ qstring(options['owner']) }|
   bundle bundle_cmd
   pidfile "/tmp/unicorn-#{app_name}.pid"
 end
@@ -80,11 +80,11 @@ template app_name do
   mode 0644
   variables({
     app_name: app_name,
-    |{if eq .Options.Hostname ""}|
+    {% if options['hostname'] == "" %}
     hostname: app_name,
-    |{ else }|
-    hostname: |{.QString .Options.Hostname}|
-    |{ end }|
+    {% else %}
+    hostname: |{ qstring(options['hostname']) }|
+    {% endif %}
     socket: unicorn_socket,
     root: File.join(app_path, current)
   })

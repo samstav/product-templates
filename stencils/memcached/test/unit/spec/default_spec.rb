@@ -1,8 +1,8 @@
 require_relative 'spec_helper'
 
-describe '|{.Cookbook.Name}|::|{.Options.Name}|' do
+describe '|{ cookbook['name'] }|::|{ options['name'] }|' do
   let(:chef_run) do
-    ChefSpec::Runner.new.converge('|{.Cookbook.Name}|::|{.Options.Name}|')
+    ChefSpec::Runner.new.converge('|{ cookbook['name'] }|::|{ options['name'] }|')
   end
 
   it 'includes the memcached recipe' do

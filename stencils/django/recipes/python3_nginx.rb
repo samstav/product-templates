@@ -1,30 +1,30 @@
 #
-# Cookbook Name:: |{ .Cookbook.Name }|
-# Recipe :: |{ .Options.Name }|
+# Cookbook Name:: |{ cookbook['name'] }|
+# Recipe :: |{ options['name'] }|
 #
-# Copyright |{ .Cookbook.Year}|, Rackspace
+# Copyright |{ cookbook['year'] }|, Rackspace
 #
 
 include_recipe 'chef-sugar'
 include_recipe 'nginx'
 
-app_name = |{.QString .Options.Name}|
-app_path = File.join(|{.QString .Options.Root}|, |{.QString .Options.Name}|)
+app_name = |{ qstring(options['name']) }|
+app_path = File.join(|{ qstring(options['root']) }|, |{ qstring(options['name'])}|)
 
 deploy_keys = Chef::EncryptedDataBagItem.load('secrets', 'deploy_keys')
-|{ if ne .Options.Dbcredentials "" }|
-db_credentials = Chef::EncryptedDataBagItem.load(|{.QString .Options.Dbcredentials}|, node.chef_environment)
-|{ end }|
+{% if options['dbcredentials'] != "" %}
+db_credentials = Chef::EncryptedDataBagItem.load(|{ qstring(options['dbcredentials']) }|, node.chef_environment)
+{% endif %}
 
-|{ if ne .Options.Dbsearch "" }|
-db_master = best_ip_for(search(:node, "chef_environment:#{node.chef_environment} AND tags:|{.Options.dbsearch}|").first)
-|{ else }|
-db_master = |{.QString .Options.Dbmaster}|
-|{ end }|
+{% if .Options.Dbsearch != "" %}
+db_master = best_ip_for(search(:node, "chef_environment:#{node.chef_environment} AND tags:|{ options['dbsearch'] }|").first)
+{% else %}
+db_master = |{ qstring(options['dbmaster']) }|
+{% endif %}
 
-directory '|{.Options.Root}|/.ssh' do
-  owner |{.QString .Options.Owner}|
-  group |{.QString .Options.Group}|
+directory '|{ options['root'] }|/.ssh' do
+  owner |{ qstring(options['owner']) }|
+  group |{ qstring(options['group']) }|
   mode '0700'
   recursive true
   action :create
@@ -44,31 +44,31 @@ end
 
 application app_name do
   path app_path
-  owner |{.QString .Options.Owner}|
-  group |{.QString .Options.Group}|
+  owner |{ qstring(options['owner']) }|
+  group |{ qstring(options['group']) }|
   deploy_key deploy_keys[app_name]
-  repository |{.QString .Options.Repo}|
-  revision |{.QString .Options.Revision}|
+  repository |{ qstring(options['repo']) }|
+  revision |{ qstring[options['revision']) }|
   restart_command do
     service "uwsgi-#{site}" do
       action :restart
       only_if { File.exist? "/etc/init.d/uwsgi-#{site}" }
     end
   end
-  migrate |{.Options.Migrate}|
+  migrate |{ options['migrate'] }|
   environment_name node.chef_environment
 
   django do
     requirements true
     interpreter 'python3'
     packages %(uwsgi django)
-    |{ if ne .Options.Dbcredentials "" }|
+    {% if options['dbcredentials'] != "" %}
     database do
       database db_credentials['database']
       username db_credentials['username']
       password db_credentials['password']
     end
-    |{ end }|
+    {% end %}
   end
 end
 
@@ -84,8 +84,8 @@ template uwsgi_confi_path do
     site_directory: File.join(app_path, 'current'),
     virtual_env: File.join(app_path, 'shared/env'),
     socket: uwsgi_socket,
-    user: |{.QString .Options.Owner}|,
-    group: |{.QString .Options.Group}|,
+    user: |{ qstring(options['owner']) }|,
+    group: |{ qstring(options['group']) }|,
     logto: File.join(node['nginx']['log_dir'], "#{app_name}-uwsgi.log"),
     module: "#{app_name}.wsgi"
   )
@@ -105,11 +105,11 @@ template File.join(node['nginx']['dir'], "sites-available", app_name) do
   group 'root'
   mode '0644'
   variables(
-  |{ if ne .Options.Hostname "" }|
-    hostname: |{ .Options.Hostname }|,
-  |{ else }|
+  {% if options['hostname'] != "" %}
+    hostname: |{ options['hostname'] }|,
+  {% else %}
     hostname: app_name,
-  |{ end }|
+  {% endif %}
     error_log: File.join(node['nginx']['log_dir'], "#{app_name}-error.log"),
     access_log: File.join(node['nginx']['log_dir'], "#{app_name}-access.log"),
     app_name: app_name,

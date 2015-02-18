@@ -1,11 +1,11 @@
-|{.Name}| CHANGELOG
+|{ cookbook['name'] }| CHANGELOG
 ===================
 
-This file is used to list changes made in each version of the |{.Name}| cookbook. We are following semantic versioning.
+This file is used to list changes made in each version of the |{ cookbook['name'] }| cookbook. We are following semantic versioning.
 
 0.1.0
 -----
-- [your_name] - Initial release of |{.Name}|
+- [your_name] - Initial release of |{ cookbook['name'] }|
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

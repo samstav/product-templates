@@ -20,10 +20,7 @@
       "files": {
         "recipes/<NAME>.rb": "recipes/single.rb",
         "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/single_spec.rb"
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
+      }
     },
     "master": {
       "files": {
@@ -34,10 +31,7 @@
         "name": {
           "default": "redis_master"
         }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
+      }
     },
     "slave": {
       "files": {
@@ -48,10 +42,7 @@
         "name": {
           "default": "redis_slave"
         }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
+      }
     },
     "sentinel": {
       "files": {
@@ -62,10 +53,7 @@
         "name": {
           "default": "redis_sentinel"
         }
-      },
-      "partials": [
-        "partials/iptables.rb"
-      ]
+      }
     }
   }
 }

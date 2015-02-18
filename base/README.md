@@ -1,4 +1,4 @@
-# |{ .Name }| Cookbook
+# |{ cookbook['name'] }| Cookbook
 
 ## [Changelog](CHANGELOG.md)
 
@@ -8,17 +8,17 @@ See CHANGELOG.md for additional information about changes to this stack over tim
 
 ## Attributes
 
-If there are any attributes of note for |{ .Name }| Cookbook, please put them here.
+If there are any attributes of note for |{ cookbook['name'] }| Cookbook, please put them here.
 
 ## Usage
 
-Any special use cases or deployment methods for |{ .Name }| Cookbook, please note them.
+Any special use cases or deployment methods for |{ cookbook['name'] }| Cookbook, please note them.
 
-### |{ .Name }|::default
+### |{ cookbook['name'] }|::default
 
 This is where you should define what the default recipe does, if anything.
 
-### |{ .Name }| Cookbook::recipes 
+### |{ cookbook['name'] }| Cookbook::recipes 
 
 Please define what the other recipes do as well.
 
@@ -32,7 +32,7 @@ Author:: Rackspace (devops-chef@rackspace.com)
 
 ## License
 ```
-# Copyright 2014, Rackspace Hosting
+# Copyright |{ cookbook['year'] }|, Rackspace Hosting
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,4 +47,3 @@ Author:: Rackspace (devops-chef@rackspace.com)
 # limitations under the License.
 #
 ```
-
