@@ -1,0 +1,14 @@
+[uwsgi]
+protocol = uwsgi
+socket = <%= @socket %>
+chdir = <%= @site_directory %>
+home = <%= @virtual_env %>
+workers = 4
+master = true
+die-on-term = true
+uid = <%= @user %>
+gid = <%= @group %>
+single-interpreter = true
+enable-threads = true
+logto = <%= @logto %>
+module = <%= @module %>

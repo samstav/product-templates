@@ -1,0 +1,33 @@
+upstream <%= @app_name %>_unicorn_server {
+  server <%= @socket %>;
+}
+
+server {
+  listen 80;
+  server_name <%= @hostname %>;
+
+  if ( $http_x_forwarded_proto != 'https' ) {
+    rewrite ^ https://$server_name$request_uri? permanent;
+  }
+
+  client_max_body_size 50m;
+  root <%= File.join(@root, 'public') %>;
+  access_log <%= File.join(node['nginx']['log_dir'], "#{@app_name}-access.log") %> combined;
+  error_log <%= File.join(node['nginx']['log_dir'], "#{@app_name}-error.log");
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    if (!-f $request_filename) {
+      proxy_pass http://<%= @app_name %>_unicorn_server;
+      break;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+server {
+  listen 80;
+  server_name <%= @hostname %>;
+
+  access_log <%= @access_log %>;
+  error_log <%= @error_log %>;
+
+  location / {
+    uwsgi_pass <%= @socket %>;
+    include uwsgi_params;
+  }
+}

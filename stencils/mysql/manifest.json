@@ -1,0 +1,44 @@
+{
+  "id": "mysql",
+  "default_stencil": "mysql_master",
+  "api": 1,
+  "dependencies": {
+    "rackspace_iptables": {},
+    "mysql-multi": {},
+    "database": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "mysql"
+    },
+    "openfor": {
+      "help": "Tag to open the memcached firewall for, if environment is passed it will open for the whole environment"
+    },
+    "databag": {
+      "help": "The name of the data bag to load the mysql credentials from, not used for slaves"
+    },
+    "database": {
+      "help": "The name of the database to create"
+    },
+    "user": {
+      "help": "The user with permissions to the database, defaults to the db name"
+    },
+    "password": {
+      "help": "The password for the user, ignored if databag is set"
+    }
+  },
+  "stencils": {
+    "mysql_master": {
+      "options": {
+        "name": {
+          "default": "mysql_master"
+        }
+      },
+      "files": {
+        "recipes/<NAME>.rb": "recipes/mysql_master.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/mysql_master_spec.rb"
+      }
+    }
+  }
+}

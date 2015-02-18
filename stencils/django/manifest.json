@@ -1,0 +1,90 @@
+{
+  "id": "django",
+  "api": 1,
+  "default_stencil": "nginx",
+  "dependencies": {
+    "rackspace_iptables": {},
+    "chef-sugar": {},
+    "application": {},
+    "application_python": {},
+    "python": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "django_app"
+    },
+    "hostname": {
+      "help": "The hostname for the application"
+    },
+    "repo": {
+      "help": "The repository to deploy from",
+      "default": "## Replace with the customer repository"
+    },
+    "revision": {
+      "help": "The revision to check out from git",
+      "default": "node.chef_environment"
+    },
+    "owner": {
+      "help": "The application owner"
+    },
+    "group": {
+      "help": "The owning group of the application files"
+    },
+    "root": {
+      "help": "The document root to deploy the application to",
+      "default": "/var/www"
+    },
+    "migrate": {
+      "help": "Whether to turn on database migrations",
+      "default": "true"
+    },
+    "dbcredentials": {
+      "help": "Databag to pull the database credentials from, expects keys: username, password, and database"
+    },
+    "dbsearch": {
+      "help": "The tag to use when searching for a database server"
+    },
+    "dbmaster": {
+      "help": "The database master to set, use when not using search",
+      "default": "localhost"
+    }
+  },
+  "stencils": {
+    "nginx": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/nginx.rb",
+        "templates/default/nginx/sites/<NAME>.erb": "templates/default/nginx/sites/site.erb",
+        "templates/default/nginx/sites/<NAME>-uwsgi.ini.erb": "templates/default/nginx/sites/site-uwsgi.ini.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb"
+      },
+      "options": {
+        "owner": {
+          "default": "node['nginx']['user']"
+        },
+        "group": {
+          "default": "node['nginx']['group']"
+        }
+      },
+      "dependencies": {
+        "nginx": {}
+      },
+      "directories": [
+        "templates/default/nginx/sites"
+      ]
+    },
+    "python3_nginx": {
+      "berks_dependencies": {
+        "application_python": {
+          "git": "https://github.com/the-galley/application_python"
+        }
+      },
+      "files": {
+        "recipes/<NAME>.rb": "recipes/python3_nginx.rb",
+        "templates/default/nginx/sites/<NAME>.erb": "templates/default/nginx/sites/site.erb",
+        "templates/default/nginx/sites/<NAME>-uwsgi.ini.erb": "templates/default/nginx/sites/site-uwsgi.ini.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb"
+      }
+    }
+  }
+}

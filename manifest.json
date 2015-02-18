@@ -2,13 +2,39 @@
   "api": 1,
   "framework": "chef",
   "stencil_sets": {
-    "format_disk": {
-      "help": "Formats the data disk on a Performance Cloud Server."
+    "rails": {
+      "help": "Creates a rails application recipe based on the type, defaults to Apache"
+    },
+    "rabbitmq": {
+      "help": "Creates a rabbitmq server"
+    },
+    "redis": {
+      "help": "Creates a redis recipe"
+    },
+    "memcached": {
+      "help": "Creates a memcached recipe"
+    },
+    "django": {
+      "help": "Creates a django application"
+    },
+    "utility": {
+      "help": "Creates some helpful utility recipes"
+    },
+    "mysql": {
+      "help": "Creates some MySQL recipes"
+    },
+    "newrelic": {
+      "help": "Basic newrelic"
+    },
+    "postgres": {
+      "help": "Creates a postgres recipe"
     }
   },
   "base": {
     "files": [
       ".gitignore",
+      ".kitchen.yml",
+      "Berksfile",
       "CHANGELOG.md",
       "Gemfile",
       "metadata.rb",

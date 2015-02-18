@@ -1,0 +1,34 @@
+{
+  "id": "rabbitmq",
+  "api": 1,
+  "default_stencil": "generic",
+  "dependencies": {
+    "rackspace_iptables": {},
+    "rabbitmq": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "rabbitmq"
+    },
+    "clustertag": {
+      "help": "The tag to search for when adding nodes to a cluster",
+      "default": "rabbitmq"
+    },
+    "cluster": {
+      "help": "Whether to enable clustering",
+      "default": "true"
+    },
+    "openfor": {
+      "help": "Tag to open the rabbitmq firewall for"
+    }
+  },
+  "stencils": {
+    "generic": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/generic.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/generic_spec.rb"
+      }
+    }
+  }
+}

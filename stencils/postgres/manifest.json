@@ -1,0 +1,41 @@
+{
+  "id": "postgres",
+  "default_stencil": "master",
+  "api": 1,
+  "dependencies": {
+    "rackspace_iptables": {},
+    "postgresql": {},
+    "database": {},
+    "pg-multi": {},
+    "chef-sugar": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "pg_master"
+    },
+    "openfor": {
+      "help": "Tag to open the memcached firewall for, if environment is passed it will open for the whole environment"
+    },
+    "databag": {
+      "help": "The name of the data bag to load the mysql credentials from, not used if the database isn't set"
+    },
+    "database": {
+      "help": "The name of the database to create"
+    },
+    "user": {
+      "help": "the user with permissions to the database"
+    },
+    "password": {
+      "help": "the password for the user, ignored if the databag is set"
+    }
+  },
+  "stencils": {
+    "master": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/master.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/master_spec.rb"
+      }
+    }
+  }
+}

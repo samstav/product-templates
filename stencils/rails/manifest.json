@@ -1,0 +1,84 @@
+{
+  "id": "rails",
+  "api": 1,
+  "default_stencil": "nginx",
+  "dependencies": {
+    "rackspace_iptables": {},
+    "chef-sugar": {},
+    "application": {},
+    "rbenv": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "application"
+    },
+    "hostname": {
+      "help": "The hostname for the application"
+    },
+    "repo": {
+      "help": "the repository to deploy from",
+      "default": "## Replace with the customer repository"
+    },
+    "revision": {
+      "help": "the revision to checkout from git",
+      "default": "node.chef_environment"
+    },
+    "owner": {
+      "help": "The application owner"
+    },
+    "group": {
+      "help": "The owning group of the application files"
+    },
+    "ruby": {
+      "help": "The version of ruby to use with the app",
+      "default": "2.1.0"
+    },
+    "root": {
+      "help": "The document root to deploy the application to",
+      "default": "/var/www"
+    },
+    "migrate": {
+      "help": "Whether to turn on database migration",
+      "default": "true"
+    },
+    "dbcredentials": {
+      "help": "Databag to pull mysql credentials from, expects keys: username, password, and database"
+    },
+    "dbtype": {
+      "help": "The type of database server the application connects to, defaults to mysql",
+      "default": "mysql"
+    },
+    "dbadapter": {
+      "help": "The adapter the app uses to connect to the master database server",
+      "default": "mysql2"
+    }
+  },
+  "stencils": {
+    "nginx": {
+      "dependencies": {
+        "nginx": {}
+      },
+      "files": {
+        "recipes/_ruby_common.rb": "recipes/_ruby_common.rb",
+        "recipes/<NAME>.rb": "recipes/rails_nginx.rb",
+        "templates/default/<NAME>.nginx.conf.erb": "templates/default/rails_nginx.conf.erb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/rails_nginx_spec.rb"
+      },
+      "directories": [
+        "templates/default"
+      ],
+      "options": {
+        "owner": {
+          "default": "node['nginx']['user']"
+        },
+        "group": {
+          "default": "node['nginx']['group']"
+        },
+        "name": {
+          "default": "rails_nginx_app"
+        }
+      }
+    }
+  }
+}

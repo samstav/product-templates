@@ -1,0 +1,26 @@
+{
+  "id": "memcached",
+  "default_stencil": "default",
+  "api": 1,
+  "dependencies": {
+    "rackspace_iptables": {},
+    "memcached": {}
+  },
+  "options": {
+    "name": {
+      "help": "Name of the recipe to create",
+      "default": "memcached"
+    },
+    "openfor": {
+      "help": "Tag to open the memcached firewall for, if environment is passed it will open for the whole environment"
+    }
+  },
+  "stencils": {
+    "default": {
+      "files": {
+        "recipes/<NAME>.rb": "recipes/default.rb",
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/default_spec.rb"
+      }
+    }
+  }
+}
