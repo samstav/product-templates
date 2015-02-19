@@ -47,8 +47,8 @@ end
 {% endif %}
 {% endif %}
 
-{% if .options['openfor'] != "" %}
-{% if options['openfor'] == "environment" }|
+{% if options['openfor'] != "" %}
+{% if options['openfor'] == "environment" %}
 search_add_iptables_rules("chef_environment:#{node.chef_environment}",
                           'INPUT',
                           "-m #{proto} -p #{proto} --dport #{node['mysql']['port']} -j ACCEPT",

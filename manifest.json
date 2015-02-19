@@ -26,6 +26,9 @@
     "newrelic": {
       "help": "Basic newrelic"
     },
+    "database": {
+      "help": "Installs and configures database services"
+    },
     "postgres": {
       "help": "Creates a postgres recipe"
     }
@@ -40,6 +43,7 @@
       "metadata.rb",
       "README.md",
       "recipes/default.rb",
+      "Rakefile",
       "test/unit/spec/default_spec.rb",
       "test/unit/spec/spec_helper.rb",
       "test/integration/encrypted_data_bag_secret",

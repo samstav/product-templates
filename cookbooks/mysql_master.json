@@ -1,0 +1,13 @@
+{
+  "name": "mysql_master",
+  "stencils": [
+    {
+      "stencil_set": "database",
+      "name": "mysql",
+      "stencil": "mysql_master",
+      "database": "testdb",
+      "user": "rackuser",
+      "password": "badpasswd"
+    }
+  ]
+}
