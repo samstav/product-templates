@@ -8,6 +8,15 @@
       "database": "testdb",
       "user": "rackuser",
       "password": "badpasswd"
+    },
+    {
+      "stencil_set": "django",
+      "name": "nginx",
+      "stencil": "nginx",
+      "database": "testdb",
+      "user": "rackuser",
+      "password": "badpasswd"
     }
+
   ]
 }

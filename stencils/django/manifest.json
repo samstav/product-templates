@@ -56,7 +56,8 @@
         "recipes/<NAME>.rb": "recipes/nginx.rb",
         "templates/default/nginx/sites/<NAME>.erb": "templates/default/nginx/sites/site.erb",
         "templates/default/nginx/sites/<NAME>-uwsgi.ini.erb": "templates/default/nginx/sites/site-uwsgi.ini.erb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb"
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb",
+        "test/whatever/testy/<NAME>_spec.rb": "recipes/new_stencil.rb"	
       },
       "options": {
         "owner": {
@@ -83,7 +84,8 @@
         "recipes/<NAME>.rb": "recipes/python3_nginx.rb",
         "templates/default/nginx/sites/<NAME>.erb": "templates/default/nginx/sites/site.erb",
         "templates/default/nginx/sites/<NAME>-uwsgi.ini.erb": "templates/default/nginx/sites/site-uwsgi.ini.erb",
-        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb"
+        "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/nginx_spec.rb",
+	"test/whatever/testy/<NAME>_spec.rb": "recipes/new_stencil.rb"
       }
     }
   }
