@@ -36,6 +36,7 @@
     "slave": {
       "files": {
         "recipes/<NAME>.rb": "recipes/slave.rb",
+        "recipes/<NAME>.rb": "recipes/newone.rb",
         "test/unit/spec/<NAME>_spec.rb": "test/unit/spec/slave_spec.rb"
       },
       "options": {

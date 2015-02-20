@@ -2,25 +2,17 @@
   "name": "mysql_master",
   "stencils": [
     {
-      "stencil_set": "database",
-      "name": "mysql",
+      "stencil_set": "nonw",
+      "name": "nonw",
       "stencil": "mysql_master",
       "database": "testdb",
       "user": "rackuser",
       "password": "badpasswd"
     },
     {
-      "stencil_set": "django",
-      "name": "nginx",
+      "stencil_set": "non3",
+      "name": "non3",
       "stencil": "nginx",
-      "database": "testdb",
-      "user": "rackuser",
-      "password": "badpasswd"
-    },
-    {
-      "stencil_set": "redis",
-      "name": "nginx",
-      "stencil": "slave",
       "database": "testdb",
       "user": "rackuser",
       "password": "badpasswd"
