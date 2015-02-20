@@ -16,6 +16,14 @@
       "database": "testdb",
       "user": "rackuser",
       "password": "badpasswd"
+    },
+    {
+      "stencil_set": "redis",
+      "name": "nginx",
+      "stencil": "slave",
+      "database": "testdb",
+      "user": "rackuser",
+      "password": "badpasswd"
     }
 
   ]
